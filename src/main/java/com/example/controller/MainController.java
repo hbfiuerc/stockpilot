@@ -42,7 +42,7 @@ public class MainController {
                         System.out.println("Da thoat chuong trinh");
                         break;  
                     case 3:
-                        showAllProduct();
+                        orderProduct();
                         break;
                     default:
                         throw new AssertionError();
@@ -50,9 +50,29 @@ public class MainController {
 
 
             }catch(NumberFormatException e) {
-                System.out.println(" Vui long nhap so nguyen trong khoang 1 - 3");
+                System.out.println(" Vui long nhap so nguyen trong khoang 1 - 4");
             }
         }
+    }
+
+    private static void orderProduct() {
+        // TODO Auto-generated method stub
+        System.out.println("Dat hang san pham");
+        System.out.print("Nhap ma san pham muon mua: ");
+        int productId = sc.nextInt();
+
+        Product p = productService.getProductbyId(productId);
+        if(p==null){
+            System.out.println("Khong tim thay san pham nay: Vui long xem lai danh sach san pham.");
+        }else{
+            System.out.print("Nhap ma soluong: ");
+            int quantity = sc.nextInt();
+            boolean success = orderService.processOrder(1, productId, quantity, p.getPrice());
+            if(success){
+                System.out.println("Dat hang thanh cong.");
+            }
+        }
+        
     }
 
     private static void showAllProduct() {

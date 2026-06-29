@@ -13,7 +13,7 @@ public class OrderRepository {
     private static final String PASSWORD = "123456";
 
     public boolean placeOrder(Order order){
-        String insertOrderSql = "Insert into Orders (customer_id, product_id,quantity ,total_price,order_date) values (?, ?, ?, ?, ?)"; 
+        String insertOrderSql = "Insert into Orders (customer_id, product_id,quantity ,total_price) values (?, ?, ?, ?)"; 
         String updateQuantitySql = "Update Products set quantity = quantity -? where product_id = ? and quantity >=?";
 
         try(Connection conn = DriverManager.getConnection(URL,USER,PASSWORD)){
@@ -44,7 +44,7 @@ public class OrderRepository {
                 return true;
             }catch(SQLException e){
                 conn.rollback();
-                System.out.println("Loi giao dich!");
+                System.out.println("Loi giao dich! Rollbacck thanh cong. "+ e.getMessage());
                 return false;
             }finally{
                 conn.setAutoCommit(true);

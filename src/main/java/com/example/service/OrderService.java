@@ -9,7 +9,7 @@ public class OrderService {
     private OrderRepository orderRepository;
 
     public OrderService() {
-        this.orderRepository = orderRepository;
+        this.orderRepository = new OrderRepository();
     }
 
     public boolean processOrder(int customerId, int productId, int quantity, BigDecimal productPrice){
@@ -19,6 +19,7 @@ public class OrderService {
         }
 
         BigDecimal totalPrice = productPrice.multiply(new BigDecimal(quantity));
+        System.out.println("So tien phai thanh toan la: "+ totalPrice);
 
         Order newOrder = new Order(customerId,productId,quantity,totalPrice);
 

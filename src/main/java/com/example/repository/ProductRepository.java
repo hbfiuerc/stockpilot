@@ -57,4 +57,30 @@ public class ProductRepository {
         return products;
 
     }
+
+    public Product findProduct(int id){
+        Product product = null;
+        String sql = "select * from Products where product_id = ?";
+        try(Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setInt(1, id);
+            try (ResultSet rs = pstmt.executeQuery()){
+                if (rs.next()) {
+                    product = new Product(
+                        rs.getInt("product_id"),
+                        rs.getString("sku"),
+                        rs.getString("name"),
+                        rs.getInt("quantity"),
+                        rs.getBigDecimal("price")
+                    );
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }                   
+            return product;
+        }catch(SQLException e){
+            System.out.println("Loi khi lay san pham");
+        }
+        return product;
+    }
 }
